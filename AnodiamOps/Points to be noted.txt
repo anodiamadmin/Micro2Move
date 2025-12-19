@@ -1,0 +1,11 @@
+Points to be noted:
+
+Already have an account? Log in (SIGN UP Screen)
+Explore (LANDING Screen) - To be considered
+Forgot password? (User Login Screen)
+Get Started button to be replaced by Rent A Bike, List A Bike, Explore (Landing Screen)
+ADD TAGLINE IN LANDING SCREEN
+
+
+
+
