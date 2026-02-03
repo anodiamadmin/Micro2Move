@@ -1,0 +1,63 @@
+GET ALL:
+
+GIVEN INPUT PARAMS:
+from_date,
+to_date,
+price,
+category,
+demand_pickup_location,
+proximity_diatance_in_kms (=3 default),
+
+CALCULATED PARAMS:
+demand_lat = find_latitude_from_google_geocoding_api(demand_pickup_location),
+demand_lng = find_longitude_from_google_geocoding_api(demand_pickup_location),
+ensure -90 < demand_lat < 90
+ensure -180 < demand_lng < 180
+lat_delta = proximity_diatance_in_kms / 111.32
+lng_delta = proximity_diatance_in_kms / (111.32 * math.cosine(demand_lat))
+pick_up_lat_min = demand_lat - lat_delta
+pick_up_lat_max = demand_lat + lat_delta
+pick_up_lng_min = demand_lng - lng_delta
+pick_up_lng_max = demand_lng + lng_delta
+
+RETURN OUTPUTS:
+e_bike.e_bike_id,
+e_bike.e_bike_name,
+e_bike.price_per_week * (e_bike.available_from_date - e_bike.available_to_date) / 7,
+e_bike.pick_up_address,
+average(e_bike_rating.e_bike_rating) group by (e_bike_rating.e_bike_id),
+count(e_bike_rating.e_bike_rating) group by (e_bike_rating.e_bike_id),
+supplier.is_verified,
+e_bike_category.e_bike_category_name,
+
+FROM
+e_bike,
+e_bike_rating,
+supplier,
+e_bike_category,
+e_bike_status,
+geo_location,
+geo_location_type,
+
+
+JOIN
+e_bike & e_bike_rating tables on e_bike_id columns
+e_bike & supplier tables on supplier_user_id columns
+e_bike & e_bike_category tables on e_bike_category_id columns
+e_bike & e_bike_status tables on e_bike_status_id columns
+e_bike.pick_up_geo_location_id & geo_location.geo_location_id
+geo_location.geo_location_type_id & geo_location_type.geo_location_type_id
+
+
+WHERE
+from_date >= e_bike.available_from_date AND
+to_date <= e_bike.available_to_date AND
+price <= (e_bike.price_per_week * (e_bike.available_from_date - e_bike.available_to_date) / 7) AND
+category = e_bike_category.e_bike_category_name AND
+e_bike_status.e_bike_status_name = 'is_listed' AND
+geo_location_type.geo_location_type_name = 'pickup location' AND
+geo_location.latitude BETWEEN pick_up_lat_min AND pick_up_lat_max AND
+geo_location.longitude BETWEEN pick_up_lng_min AND pick_up_lng_max
+
+SORT BY
+e_bike.price_per_week ASCENDING

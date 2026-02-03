@@ -1,12 +1,7 @@
-GET ALL
+GET:
 
 GIVEN INPUT PARAMS:
-from_date,
-to_date,
-price,
-category,
-demand_lat,
-demand_lng,
+e_bike_id
 
 RETURN OUTPUTS:
 e_bike.e_bike_id,
@@ -17,26 +12,31 @@ average(e_bike_rating.e_bike_rating) group by (e_bike_rating.e_bike_id),
 count(e_bike_rating.e_bike_rating) group by (e_bike_rating.e_bike_id),
 supplier.is_verified,
 e_bike_category.e_bike_category_name,
+insurer.insurer_id,
+insurer.insurer_name,
+insurance_plan.insurance_plan_id,
+insurance_plan.insurance_plan_name,
+insurance_plan.insurance_plan_description,
+insurance_plan.premium_per_week,
+insurance_plan.sum_assured,
+insurance_plan.exclusion_rules,
 
 FROM
 e_bike,
 e_bike_rating,
 supplier,
 e_bike_category,
+e_bike_status,
+insurance_plan,
+insurer,
 
 JOIN
 e_bike & e_bike_rating tables on e_bike_id columns
 e_bike & supplier tables on supplier_user_id columns
 e_bike & e_bike_category tables on e_bike_category_id columns
+e_bike & e_bike_status tables on e_bike_status_id columns
+e_bike & insurance_plan tables on insurance_plan_id columns
+insurance_plan & insurer tables on insurer_id columns
 
 WHERE
-from_date >= e_bike.available_from_date AND
-to_date <= e_bike.available_to_date AND
-price <= (e_bike.price_per_week * (e_bike.available_from_date - e_bike.available_to_date) / 7) AND
-category = e_bike_category.e_bike_category_name AND
-
-(demand_lat, demand_lng)
-(pickup_demand_lat - e_bike.pick_up_lat)^2 + (pickup_demand_lng - e_bike.pick_up_lng)^2 >= 
-
-SORT BY
-e_bike.price_per_week ASCENDING
+e_bike_status.e_bike_status_name = 'is_listed'

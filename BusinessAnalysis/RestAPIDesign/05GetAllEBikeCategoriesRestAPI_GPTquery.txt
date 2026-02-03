@@ -1,0 +1,8 @@
+GET ALL
+
+RETURN OUTPUTS:
+e_bike_category.e_bike_category_id,
+e_bike_category.e_bike_category_name
+
+FROM
+e_bike_category

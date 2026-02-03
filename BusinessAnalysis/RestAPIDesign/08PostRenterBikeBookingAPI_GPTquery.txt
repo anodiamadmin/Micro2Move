@@ -1,0 +1,42 @@
+POST:
+
+INSERT:
+
+booking.booking_id (uuid),
+booking.user_id = user_id,
+booking.e_bike_id = e_bike_id,
+booking.from_date = from_date,
+booking.to_date = to_date,
+booking.rental_amount = e_bike.price_per_week * (booking.from_date - booking.to_date) / 7,
+booking.booking_total_amount = booking.rental_amount + insurance_policy.premium_amount,
+booking.insurance_policy_id (uuid),
+insurance_policy.insurence_policy_id = booking.insurance_policy_id,
+insurance_policy.insurer_id = insurer_id,
+insurance_policy.insurance_plan_id = insurance_plan_id,
+insurance_policy.insured_id = insured_id,
+insurance_policy.date_of_purchase = booking.bookin_date,
+insurance_policy.date_effective_from = booking.from_date,
+insurance_policy.date_effective_to = booking.to_date,
+insurance_policy.premium_amount = insurance_plan.premium_per_week * (insurance_policy.date_effective_from - insurance_policy.date_effective_to) / 7,
+
+INTO
+booking,
+insurance_policy,
+
+JOIN
+e_bike & e_bike_status tables on e_bike_status_id columns
+e_bike & insurance_plan tables on insurance_plan_id columns
+insurance_plan & insurer tables on insurer_id columns
+
+
+
+
+UPDATE
+e_bike
+
+SET
+e_bike.e_bike_status_id = e_bike_status.e_bike_status_id
+
+WHERE
+e_bike_status_name = 'is_booked'
+
