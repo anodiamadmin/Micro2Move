@@ -6,7 +6,7 @@ to_date,
 price,
 category,
 demand_lat,
-demand_lng
+demand_lng,
 
 RETURN OUTPUTS:
 e_bike.e_bike_id,
