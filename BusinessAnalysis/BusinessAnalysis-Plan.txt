@@ -1,0 +1,28 @@
+1: Micro2Move Market App (Current App):
+Key Features:
+- Rider/ renter features
+- Explore
+- Profile
+
+*Auth
+- Simple (password based access in MVP)
+- Simple registration with KYC (unoptimized) in MVP 
+
+2: Micro2Move Business website:
+- Simple password based access in MVP
+- Simple registration in MVP + Admin approval 
+
+- Admin features
+  1. # Auth Approval (notification sent manually in MVP)
+
+- Supplier features
+  1. # registration
+  2. # login (Simple password based access in MVP)
+  3. # List Bikes:
+       ebike_series_id, ebike_series_name, ebike_series_description, supplier_name, supplier_id, availability_start_date, listing_date, number_of_ebikes, ebike_category, pickup_address, price_per_week, ebike_image, 
+
+
+verification_
+
+Now micro2Move project is changing form peer-to-peer e-bike hire to e-bike businesses like PEDL or 99Bikes franchisees from Sydney listing or renting out e-bikes on the platform. I shall ask subsequent questions regarding designing the platform:
+Through the Micro2Move Business website, e-bike shops and businesses, hence forth called organizational suppliers or OS-es, will log in and list a series of e-bikes and put in how many of those e-bikes are available. later on they can view/ update the number. They can also view how many of them are booked or rented on a particular date or date range.
